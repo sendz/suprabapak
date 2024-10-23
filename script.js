@@ -44,6 +44,7 @@ function closeMenu() {
 }
 
 
+const API_HOST = 'https://data.bmkg.go.id/DataMKG/TEWS'
 
 let markers = []
 
@@ -84,7 +85,7 @@ const clearMakers = () => {
   markers = []
 }
 
-const createMarker = ({ coordinates, magnitude, time, location, depth }) => {
+const createMarker = ({ coordinates, magnitude, time, location, depth, shakemap }) => {
   const marker = L.circleMarker(coordinates, {
     radius: magnitude * 2,
     fillColor: getColor(magnitude),
@@ -96,14 +97,15 @@ const createMarker = ({ coordinates, magnitude, time, location, depth }) => {
 <strong>Magnitude: </strong>${magnitude} SR<br />
 <strong>Kedalaman: </strong>${depth}<br />
 <strong>Lokasi: </strong>${location}<br />
-<strong>Waktu: </strong>${time}
+<strong>Waktu: </strong>${time}<br />
+${shakemap ? `<strong>Peta:</strong><br /><a href="${API_HOST}/${shakemap}" target="_blank"><img src="${API_HOST}/${shakemap}" alt="${shakemap}" width="240" /></a>` : ''}
   `)
   markers.push(marker)
   return marker
 }
 
 const fetchLatestEarthquake = async () => {
-  const response = await fetch('https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json')
+  const response = await fetch(`${API_HOST}/autogempa.json`)
   const data = await response.json()
 
   console.log(data.Infogempa.gempa)
@@ -113,6 +115,7 @@ const fetchLatestEarthquake = async () => {
     Wilayah,
     DateTime,
     Kedalaman,
+    Shakemap
   } = data.Infogempa.gempa
 
   createMarker({
@@ -120,7 +123,8 @@ const fetchLatestEarthquake = async () => {
     magnitude: Number(Magnitude),
     location: Wilayah,
     time: new Date(DateTime).toLocaleString(),
-    depth: Kedalaman
+    depth: Kedalaman,
+    shakemap: Shakemap
   }).addTo(map)
 
   map.setView(Coordinates.split(','), 8)
@@ -166,12 +170,12 @@ const showLatest = async () => {
 
 const showStrong = async () => {
   clearMakers()
-  await fetchStrongEarthquakes('https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json')
+  await fetchStrongEarthquakes(`${API_HOST}/gempaterkini.json`)
   closeMenu()
 }
 
 const showRecent = async () => {
   clearMakers()
-  await fetchStrongEarthquakes('https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json')
+  await fetchStrongEarthquakes(`${API_HOST}/gempadirasakan.json`)
   closeMenu()
 }
