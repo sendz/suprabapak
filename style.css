@@ -58,28 +58,6 @@ body, html {
 .menu-item:hover {
     background-color: #f0f0f0;
 }
-.sidebar {
-    position: absolute;
-    top: 0;
-    right: -300px;
-    width: 300px;
-    height: 100%;
-    background-color: white;
-    overflow-y: auto;
-    transition: right 0.3s;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-    z-index: 999;
-}
-.sidebar.open {
-    right: 0;
-}
-.sidebar-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px;
-}
 .earthquake-item {
     padding: 10px;
     border-bottom: 1px solid #eee;
@@ -103,14 +81,8 @@ body, html {
     }
 }
 @media (max-width: 768px) {
-    .menu, .sidebar {
-        width: 100%;
-    }
     .menu {
         left: -100%;
-    }
-    .sidebar {
-        right: -100%;
     }
     #map {
         margin-left: 0;
