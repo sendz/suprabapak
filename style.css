@@ -1,0 +1,118 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+#map {
+    height: 100%;
+    width: 100%;
+    transition: margin-left 0.3s;
+}
+.menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+.hamburger {
+    width: 30px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+.menu {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    overflow-y: auto;
+    transition: left 0.3s;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    z-index: 1001;
+}
+.menu.open {
+    left: 0;
+}
+.menu-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+.menu-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.menu-item:hover {
+    background-color: #f0f0f0;
+}
+.sidebar {
+    position: absolute;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    overflow-y: auto;
+    transition: right 0.3s;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+.sidebar.open {
+    right: 0;
+}
+.sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+.earthquake-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.earthquake-item:hover {
+    background-color: #f0f0f0;
+}
+@media (min-width: 769px) {
+    .menu {
+        left: 0;
+    }
+    #map {
+        margin-left: 250px;
+    }
+    .menu-toggle {
+        display: none;
+    }
+    .menu-close {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .menu, .sidebar {
+        width: 100%;
+    }
+    .menu {
+        left: -100%;
+    }
+    .sidebar {
+        right: -100%;
+    }
+    #map {
+        margin-left: 0;
+    }
+}
